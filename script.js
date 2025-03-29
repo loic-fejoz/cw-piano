@@ -100,55 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Default speed from URL if any
-    let speedFromUrl = new URLSearchParams(window.location.search).get('speed');
-    if (speedFromUrl) {
-        speed = parseInt(speedFromUrl, 10);
-    }
-
-    console.log(`Speed set to ${speed} wpm`);
-    speedInput.value = speed; // Update the input element with the new speed value
-    updateDitDuration();
-
-    // Symbols to play if any
-    // Handle message query parameter conversion to track if any. Convert to track if present.
-    if (window.location.search.includes('?')) {
-        const urlParams = new URLSearchParams(window.location.search);
-        track = urlParams.get('track');
-    } else {
-        console.warn('No track parameter found in the URL.');
-        track = '-___.___._-_______-___.___._-______';
-    }
-
-    // Function to start the tile generation
-    function startTileGeneration() {
-        index = 0;
-        const validChars = ['.', '-', '_'];
-        track = track.split('');
-        if (!track.every(char => validChars.includes(char))) {
-            console.error('Invalid track parameter. Must be a string of exactly 3 characters, each being one of ".", "-", or "_"');
-            return;
-        }
-
-        const trackElt = document.getElementById('track');
-        generateTile(trackElt);
-    }
-
-    // Update the speed when the input changes
-    speedInput.addEventListener('input', () => {
-        speed = parseInt(speedInput.value, 10);
-        console.log(`Speed set to ${speed} wpm`);
-        updateDitDuration();
-    });
-
-    function updateDitDuration() {
-        const dit_duration_in_ms = 50000 / (60 * speed);
-        document.querySelectorAll('.dot').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
-        document.querySelectorAll('.dash').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms * 3}ms`);
-        document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
-    }
-
-
     // Convert a text message to CW track
     const asciiToMorseMap = {
         'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.',
@@ -172,6 +123,59 @@ document.addEventListener('DOMContentLoaded', () => {
             encoded += '_______'; // Add a space between words
         });
         return encoded;
+    }
+
+    // Default speed from URL if any
+    let speedFromUrl = new URLSearchParams(window.location.search).get('speed');
+    if (speedFromUrl) {
+        speed = parseInt(speedFromUrl, 10);
+    }
+
+    console.log(`Speed set to ${speed} wpm`);
+    speedInput.value = speed; // Update the input element with the new speed value
+    updateDitDuration();
+
+    // Symbols to play if any
+    if (window.location.search.includes('?')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        msg = urlParams.get('msg');
+        if (msg) {
+            track = convertMessageToCW(msg);
+        } else {
+            track = urlParams.get('track');
+        }
+    }
+    if (!track) {
+        console.warn('No track parameter found in the URL.');
+        track = '-___.___._-_______-___.___._-______';
+    }
+
+    // Function to start the tile generation
+    function startTileGeneration() {
+        index = 0;
+        const validChars = ['.', '-', '_'];
+        track = track.split('');
+        if (!track.every(char => validChars.includes(char))) {
+            console.error('Invalid track parameter. Must be a string of exactly 3 characters, each being one of ".", "-", or "_"');
+            return;
+        }
+        // Remove all timeout handlers before starting a new sequence of tiles. AI!
+        const trackElt = document.getElementById('track');
+        generateTile(trackElt);
+    }
+
+    // Update the speed when the input changes
+    speedInput.addEventListener('input', () => {
+        speed = parseInt(speedInput.value, 10);
+        console.log(`Speed set to ${speed} wpm`);
+        updateDitDuration();
+    });
+
+    function updateDitDuration() {
+        const dit_duration_in_ms = 50000 / (60 * speed);
+        document.querySelectorAll('.dot').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
+        document.querySelectorAll('.dash').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms * 3}ms`);
+        document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
     }
 
     // Handle form submission
