@@ -21,6 +21,23 @@ body {
     margin-bottom: 20px;
 }
 
+.tile {
+    position: absolute;
+    left: 0;
+    animation-name: moveDown;
+    animation-duration: 3s; /* Adjust duration as needed */
+    animation-fill-mode: forwards;
+}
+
+@keyframes moveDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+
 #keyboard {
     display: flex;
     justify-content: center;

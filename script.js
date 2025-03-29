@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
             gainNode.gain.setValueAtTime(0, audioContext.currentTime);
             oscillator.connect(gainNode);
         }
-	oscillator.start();
     }
 
     // Create the keyboard
@@ -70,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const tileElement = document.createElement('div');
         tileElement.classList.add(`tile`, tileType);
-        tileElement.style.animationDuration = `${tileDuration}s`;
         track.appendChild(tileElement);
 
         setTimeout(() => {
