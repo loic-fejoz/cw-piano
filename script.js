@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreDisplay = document.getElementById('score');
     let score = 0;
     let audioContext;
+    let oscillator;
 
     // Define the Morse Code keys and their corresponding frequencies
     const morseKeys = [
@@ -25,18 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!audioContext) {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
         }
-        const oscillator = audioContext.createOscillator();
-        oscillator.type = 'sine';
+        if (!oscillator) {
+            oscillator = audioContext.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.connect(audioContext.destination);
+        }
         oscillator.frequency.value = frequency;
-        oscillator.connect(audioContext.destination);
         oscillator.start();
     }
 
     // Function to stop the tone
     function stopTone() {
-        if (audioContext) {
-            audioContext.close();
-            audioContext = null;
+        if (oscillator) {
+            oscillator.stop();
         }
     }
 
