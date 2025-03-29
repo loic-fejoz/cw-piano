@@ -31,14 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
             oscillator.type = 'sine';
             oscillator.connect(audioContext.destination);
         }
-        oscillator.frequency.value = frequency;
-        oscillator.start();
+        if (!oscillator.playing) {
+            oscillator.frequency.value = frequency;
+            oscillator.start();
+            oscillator.playing = true;
+        }
     }
 
     // Function to stop the tone
     function stopTone() {
-        if (oscillator) {
+        if (oscillator && oscillator.playing) {
             oscillator.stop();
+            oscillator.playing = false;
         }
     }
 
