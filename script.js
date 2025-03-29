@@ -24,7 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gainNode) {
             gainNode = audioContext.createGain();
             gainNode.connect(audioContext.destination);
+	    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            oscillator.connect(gainNode);
         }
+	oscillator.start();
     }
 
     // Create the keyboard
@@ -43,17 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
             initAudio();
         }
         oscillator.frequency.value = frequency;
-        oscillator.connect(gainNode);
         gainNode.gain.setValueAtTime(1, audioContext.currentTime); // Set gain to 1 (full volume)
-        oscillator.start();
     }
 
     // Function to stop the tone
     function stopTone() {
         if (oscillator && gainNode) {
-            oscillator.disconnect(gainNode);
             gainNode.gain.setValueAtTime(0, audioContext.currentTime); // Set gain to 0 (mute)
-            oscillator.stop();
         }
     }
 
@@ -61,7 +60,4 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateScore() {
         scoreDisplay.textContent = `Score: ${score}`;
     }
-
-    // Initialize audio context, oscillator, and gain node when the game starts
-    initAudio();
 });
