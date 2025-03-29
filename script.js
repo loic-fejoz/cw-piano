@@ -24,10 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gainNode) {
             gainNode = audioContext.createGain();
             gainNode.connect(audioContext.destination);
-	    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
             oscillator.connect(gainNode);
         }
-	oscillator.start();
     }
 
     // Create the keyboard
@@ -60,4 +59,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateScore() {
         scoreDisplay.textContent = `Score: ${score}`;
     }
+
+    // Function to generate a random tile
+    function generateTile(track) {
+        const tileTypes = ['dot', 'dash'];
+        const tileType = tileTypes[Math.floor(Math.random() * tileTypes.length)];
+        const tileDuration = tileType === 'dot' ? 1 : 3;
+        const spaceDuration = Math.floor(Math.random() * 3) + 1;
+
+        const tileElement = document.createElement('div');
+        tileElement.classList.add(`tile`, tileType);
+        tileElement.style.animationDuration = `${tileDuration}s`;
+        track.appendChild(tileElement);
+
+        setTimeout(() => {
+            track.removeChild(tileElement);
+        }, (tileDuration + spaceDuration) * 1000);
+    }
+
+    // Function to start the tile generation
+    function startTileGeneration() {
+        const track = document.getElementById('track');
+
+        setInterval(() => generateTile(track), 1000); // Generate a tile every second
+    }
+
+    // Initialize audio context, oscillator, and gain node when the game starts
+    initAudio();
+
+    // Start generating tiles
+    startTileGeneration();
 });
