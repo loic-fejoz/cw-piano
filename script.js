@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
             oscillator.connect(audioContext.destination);
         }
         if (!oscillator.playing) {
+	    oscillator.playing = true;
             oscillator.frequency.value = frequency;
             oscillator.start();
-            oscillator.playing = true;
         }
     }
 
