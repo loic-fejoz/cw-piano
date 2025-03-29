@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         trackElt.prepend(tileElement);
 
         setTimeout(() => {
-            tileElement.classList.add(tileType);
+            tileElement.classList.add(tileType, tileType + '-' + speed.toString() + 'wpm');
         }, 10); // Small delay to ensure the element is in the DOM
 
         setTimeout(() => {

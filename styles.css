@@ -34,21 +34,54 @@ body {
     background-color: red;
     border-radius: 50%;
     height: 50px;
-    transition: height 0.08s linear;
 }
 
 .dash {
     background-color: lightblue;
     border-radius: 20px;
     height: 150px;
-    transition: height 0.24s linear;
 }
 
 .space {
     background-color: lightgrey;
     border-radius: 20px;
     height: 50px;
-    transition: height 0.08s linear;
+}
+
+.dot-20wpm {
+    transition: height 0.041s linear;
+}
+
+.dash-20wpm {
+    transition: height 0.125s linear;
+}
+
+.space-20wpm {
+    transition: height 0.041s linear;
+}
+
+.dot-15wpm {
+    transition: height 0.055s linear;
+}
+
+.dash-15wpm {
+    transition: height 0.166s linear;
+}
+
+.space-15wpm {
+    transition: height 0.055s linear;
+}
+
+.dot-10wpm {
+    transition: height 0.083s linear;
+}
+
+.dash-10wpm {
+    transition: height 0.25s linear;
+}
+
+.space-10wpm {
+    transition: height 0.083s linear;
 }
 
 #keyboard {
