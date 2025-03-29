@@ -132,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         speed = parseInt(speedInput.value, 10);
         console.log(`Speed set to ${speed} wpm`);
         updateDitDuration();
+        speedInput.value = speed; // Update the input element with the new speed value
     });
 
     function updateDitDuration() {
