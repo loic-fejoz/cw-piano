@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyboardContainer = document.getElementById('keyboard');
     const speedInput = document.getElementById('speed-input');
     const scoreDisplay = document.getElementById('score');
+    const messageInput = document.getElementById('message-input');
     let score = 0;
     let audioContext;
     let oscillator;
@@ -73,11 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const dit_duration_in_ms = 50000 / (60 * speed);
         const tileTypes = { '.': 'dot', '-': 'dash', '_': 'space' };
 
-	const current = track[index];
+        const current = track[index];
         index = (index + 1) % track.length;
-	tileType = tileTypes[current];
+        tileType = tileTypes[current];
 
-        const tileDuration = (tileType === 'dot' || tileType === 'space') ? 1 : 3; 
+        const tileDuration = (tileType === 'dot' || tileType === 'space') ? 1 : 3;
 
         const tileElement = document.createElement('div');
         tileElement.classList.add(`tile`);
@@ -90,8 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             generateTile(trackElt);
         }, tileDuration * dit_duration_in_ms); // Generate a new tile once the last one has fully grown. 
-        
-	// Ensure the trackElt only contains the latest 10 tiles
+
+        // Ensure the trackElt only contains the latest 10 tiles
         while (trackElt.children.length > 10) {
             if (trackElt.children.length > 10) {
                 trackElt.removeChild(trackElt.lastChild);
@@ -109,6 +110,45 @@ document.addEventListener('DOMContentLoaded', () => {
     speedInput.value = speed; // Update the input element with the new speed value
     updateDitDuration();
 
+    // Symbols to play if any
+    // Handle message query parameter conversion to track if any. Convert to track if present. AI!
+    if (window.location.search.includes('?')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        track = urlParams.get('track');
+    } else {
+        console.warn('No track parameter found in the URL.');
+        track = '-___.___._-_______-___.___._-______';
+    }
+
+    // Function to start the tile generation
+    function startTileGeneration() {
+        index = 0;
+        const validChars = ['.', '-', '_'];
+        track = track.split('');
+        if (!track.every(char => validChars.includes(char))) {
+            console.error('Invalid track parameter. Must be a string of exactly 3 characters, each being one of ".", "-", or "_"');
+            return;
+        }
+
+        const trackElt = document.getElementById('track');
+        generateTile(trackElt);
+    }
+
+    // Update the speed when the input changes
+    speedInput.addEventListener('input', () => {
+        speed = parseInt(speedInput.value, 10);
+        console.log(`Speed set to ${speed} wpm`);
+        updateDitDuration();
+    });
+
+    function updateDitDuration() {
+        const dit_duration_in_ms = 50000 / (60 * speed);
+        document.querySelectorAll('.dot').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
+        document.querySelectorAll('.dash').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms * 3}ms`);
+        document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
+    }
+
+
     // Convert a text message to CW track
     const asciiToMorseMap = {
         'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.',
@@ -116,24 +156,22 @@ document.addEventListener('DOMContentLoaded', () => {
         'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-',
         'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
         '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
-        '6': '-....', '7': '--...', '8': '---..', '9': '----.'
+        '6': '-....', '7': '--...', '8': '---..', '9': '----.', ' ': ''
     };
 
     function convertMessageToCW(msg) {
-        const words = msg.split(' ');
+        const words = msg.trim().split(' ');
         let encoded = '';
         words.forEach(word => {
             word.split('').forEach(char => {
-                if (char === ' ') {
-                    encoded += '_';
-                } else {
-                    encoded += asciiToMorseMap[char.toUpperCase()];
-                    encoded += ' ';
-                }
+                asciiToMorseMap[char.toUpperCase()].split('').forEach(s => {
+                    encoded += s + '_';
+                });
+                encoded += '__'; // Add 3 unit space, but 1 was already put after character
             });
             encoded += '_______'; // Add a space between words
         });
-        return encoded.trim();
+        return encoded;
     }
 
     // Handle form submission
@@ -141,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const message = messageInput.value;
         if (message) {
             track = convertMessageToCW(message);
+            console.log('New track: ' + track);
             startTileGeneration();
         } else {
             alert('Please enter a message to convert.');
