@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const dit_duration_in_ms = 80;
     const keyboardContainer = document.getElementById('keyboard');
     const scoreDisplay = document.getElementById('score');
     let score = 0;
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Define the Morse Code keys and their corresponding frequencies
     const morseKeys = [
-        { key: 'A', frequency: 800 },
+        { key: 'A', frequency: 700 },
         // Add more keys as needed
     ];
 
@@ -83,7 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             generateTile(trackElt);
-        }, (tileDuration * 1000) - 10); // Generate a new tile once the last one has fully grown. 
+        }, tileDuration * dit_duration_in_ms); // Generate a new tile once the last one has fully grown. 
+        
+	// Ensure the trackElt only contains the latest 10 tiles
+        while (trackElt.children.length > 10) {
+            if (trackElt.children.length > 10) {
+                trackElt.removeChild(trackElt.lastChild);
+            }
+        }
     }
 
     // Function to start the tile generation
@@ -103,12 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Ensure the trackElt only contains the latest 10 tiles
-        while (trackElt.children.length > 10) {
-            if (trackElt.children.length > 10) {
-                trackElt.removeChild(trackElt.lastChild);
-            }
-        }
         generateTile(trackElt);
     }
 

@@ -19,33 +19,36 @@ body {
     border: 1px solid #ccc;
     overflow-y: hidden;
     margin-bottom: 20px;
+
+    justify-content: center;
 }
 
 .tile {
     position: relative;
     left: 0;
     height: 0;
+    width: 100%;
 }
 
 .dot {
     background-color: red;
     border-radius: 50%;
     height: 50px;
-    transition: height 1s linear;
+    transition: height 0.08s linear;
 }
 
 .dash {
     background-color: lightblue;
     border-radius: 20px;
     height: 150px;
-    transition: height 3s linear;
+    transition: height 0.24s linear;
 }
 
 .space {
     background-color: lightgrey;
     border-radius: 20px;
     height: 50px;
-    transition: height 1s linear;
+    transition: height 0.08s linear;
 }
 
 #keyboard {
