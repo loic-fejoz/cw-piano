@@ -109,47 +109,22 @@ document.addEventListener('DOMContentLoaded', () => {
     speedInput.value = speed; // Update the input element with the new speed value
     updateDitDuration();
 
-    // Function to start the tile generation
-    function startTileGeneration() {
-        index = 0;
-        const trackElt = document.getElementById('track');
-
-	// Symbols to play if any
-        if (window.location.search.includes('?')) {
-            const urlParams = new URLSearchParams(window.location.search);
-            track = urlParams.get('track');
-        } else {
-            console.warn('No track parameter found in the URL.');
-	    track = '-___.___._-_______-___.___._-______';
-        }
-	const validChars = ['.', '-', '_'];
-	track = track.split('');
-        if (!track.every(char => validChars.includes(char))) {
-            console.error('Invalid track parameter. Must be a string of exactly 3 characters, each being one of ".", "-", or "_"');
-            return;
-        }
-
-        generateTile(trackElt);
-    }
-
-    // Update the speed when the input changes
-    speedInput.addEventListener('input', () => {
-        speed = parseInt(speedInput.value, 10);
-        console.log(`Speed set to ${speed} wpm`);
-        updateDitDuration();
-    });
-
-    function updateDitDuration() {
-        const dit_duration_in_ms = 50000 / (60 * speed);
-        document.querySelectorAll('.dot').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
-        document.querySelectorAll('.dash').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms * 3}ms`);
-        document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
-    }
-
     // Convert a text message to CW track
     function convertMessageToCW(msg) {
-       // TODO 
-       return encoded;
+        const words = msg.split(' ');
+        let encoded = '';
+        words.forEach(word => {
+            word.split('').forEach(char => {
+                if (char === ' ') {
+                    encoded += '_';
+                } else {
+                    encoded += morseKeys.find(key => key.key.toLowerCase() === char.toLowerCase()).morseCode;
+                    encoded += ' ';
+                }
+            });
+            encoded += ' / '; // Add a space between words
+        });
+        return encoded.trim();
     }
 
     // Handle form submission
