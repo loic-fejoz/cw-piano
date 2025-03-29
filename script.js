@@ -63,20 +63,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to generate a random tile
     function generateTile(track) {
-        const tileTypes = ['dot', 'dash'];
+        const tileTypes = ['dot', 'dash', 'space']; // Add 'space' to the array
         const tileType = tileTypes[Math.floor(Math.random() * tileTypes.length)];
-        const tileDuration = tileType === 'dot' ? 1 : 3; // Adjust duration as needed
+        const tileDuration = tileType === 'dot' ? 1 : (tileType === 'dash' ? 3 : 0.5); // Adjust duration as needed
 
         const tileElement = document.createElement('div');
         tileElement.classList.add(`tile`);
         track.prepend(tileElement);
 
         setTimeout(() => {
-	    tileElement.classList.add(tileType);
+            tileElement.classList.add(tileType);
         }, 10); // Small delay to ensure the element is in the DOM
 
         setTimeout(() => {
-	    generateTile(track);
+            generateTile(track);
         }, tileDuration * 1000); // Generate a new tile once the last one has fully grown. 
     }
 
