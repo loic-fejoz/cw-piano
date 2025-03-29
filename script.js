@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const dit_duration_in_ms = 50 / 60 * speed;
     const keyboardContainer = document.getElementById('keyboard');
     const speedInput = document.getElementById('speed-input');
     const scoreDisplay = document.getElementById('score');
@@ -114,9 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Calculate the duration in milliseconds based on the speed
-        const durationInMs = (60 / speed) * dit_duration_in_ms;
-
         generateTile(trackElt);
     }
 
@@ -127,5 +123,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Start generating tiles
-    startTileGeneration();
+    //startTileGeneration();
 });
