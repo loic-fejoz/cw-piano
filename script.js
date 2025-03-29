@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to start the tile generation
     function startTileGeneration() {
+	index = 0;
         const trackElt = document.getElementById('track');
 
 	// Symbols to play if any
