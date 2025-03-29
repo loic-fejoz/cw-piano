@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     encoded += ' ';
                 }
             });
-            encoded += ' / '; // Add a space between words
+            encoded += '_______'; // Add a space between words
         });
         return encoded.trim();
     }
