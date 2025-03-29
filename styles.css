@@ -22,15 +22,16 @@ body {
 }
 
 .tile {
-    position: absolute;
     left: 0;
     animation-name: moveDown;
-    animation-duration: 3s; /* Adjust duration as needed */
+    animation-duration: 10s; /* Adjust duration as needed */
     animation-fill-mode: forwards;
+    min-height: 50px;
+    min-width: 50px;
 }
 
 .dot {
-    background-color: lightred;
+    background-color: red;
 }
 
 .dash {
