@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let audioContext;
     let oscillator;
     let gainNode;
+    let index = 0;
+    let track = ['.'];
 
     // Define the Morse Code keys and their corresponding frequencies
     const morseKeys = [
@@ -62,43 +64,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Function to generate a random tile based on the track parameter
-    function generateTile(track) {
-        const validChars = ['.', '-', '_'];
-        if (track.length !== 3 || !track.split('').every(char => validChars.includes(char))) {
-            console.error('Invalid track parameter. Must be a string of exactly 3 characters, each being one of ".", "-", or "_"');
-            return;
-        }
+    function generateTile(trackElt) {
+	const tileTypes = { '.': 'dot', '-': 'dash', '_': 'space' };
 
-        const tileTypes = { '.': 'dot', '-': 'dash', '_': 'space' };
+	const current = track[index];
+        index = (index + 1) % track.length;
+	tileType = tileTypes[current];
+
         const tileDuration = (tileType === 'dot' || tileType === 'space') ? 1 : 3; 
 
-        const trackArray = track.split('');
-        trackArray.forEach((char, index) => {
-            const tileElement = document.createElement('div');
-            tileElement.classList.add(`tile`);
-            track.prepend(tileElement);
+        const tileElement = document.createElement('div');
+        tileElement.classList.add(`tile`);
+        trackElt.prepend(tileElement);
 
-            setTimeout(() => {
-                tileElement.classList.add(tileTypes[char]);
-            }, 10); // Small delay to ensure the element is in the DOM
+        setTimeout(() => {
+            tileElement.classList.add(tileType);
+        }, 10); // Small delay to ensure the element is in the DOM
 
-            setTimeout(() => {
-                generateTile(trackArray.slice(index + 1).join(''));
-            }, (tileDuration * 1000) - 10); // Generate a new tile once the last one has fully grown. 
-        });
+        setTimeout(() => {
+            generateTile(trackElt);
+        }, (tileDuration * 1000) - 10); // Generate a new tile once the last one has fully grown. 
     }
 
     // Function to start the tile generation
     function startTileGeneration() {
-        const track = document.getElementById('track');
-
+        const trackElt = document.getElementById('track');
         if (window.location.search.includes('?')) {
             const urlParams = new URLSearchParams(window.location.search);
-            const trackParam = urlParams.get('track');
-            generateTile(trackParam);
+            track = urlParams.get('track');
         } else {
-            console.error('No track parameter found in the URL.');
+            console.warn('No track parameter found in the URL.');
+	    track = '-___.___._-_______-___.___._-______';
         }
+	const validChars = ['.', '-', '_'];
+	track = track.split('');
+        if (!track.every(char => validChars.includes(char))) {
+            console.error('Invalid track parameter. Must be a string of exactly 3 characters, each being one of ".", "-", or "_"');
+            return;
+        }
+	generateTile(trackElt);
     }
 
     // Start generating tiles
