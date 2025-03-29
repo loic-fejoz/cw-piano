@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let track = ['.'];
     let speed = 15; // Default speed in wpm
 
+    // Declare convertButton
+    const convertButton = document.getElementById('convert-button');
+
     // Define the Morse Code keys and their corresponding frequencies
     const morseKeys = [
         { key: 'A', frequency: 700 },
