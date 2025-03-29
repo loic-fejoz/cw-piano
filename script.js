@@ -105,7 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Ensure the trackElt only contains the latest 10 tiles
         while (trackElt.children.length > 10) {
-            trackElt.removeChild(trackElt.lastChild);
+            if (trackElt.children.length > 10) {
+                trackElt.removeChild(trackElt.lastChild);
+            }
         }
         generateTile(trackElt);
     }
