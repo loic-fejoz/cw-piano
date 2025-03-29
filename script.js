@@ -146,11 +146,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
     }
 
+    // Convert a text message to CW track
+    function convertMessageToCW(msg) {
+       // TODO 
+       return encoded;
+    }
+
     // Handle form submission
     convertButton.addEventListener('click', () => {
         const message = messageInput.value;
         if (message) {
-            track = message.split('').map(char => char === ' ' ? '_' : char).join('');
+            track = convertMessageToCW(message);
             startTileGeneration();
         } else {
             alert('Please enter a message to convert.');
