@@ -99,6 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to start the tile generation
     function startTileGeneration() {
         const trackElt = document.getElementById('track');
+        let speedFromUrl = new URLSearchParams(window.location.search).get('speed');
+
+        if (speedFromUrl) {
+            speed = parseInt(speedFromUrl, 10);
+        }
+
+        console.log(`Speed set to ${speed} wpm`);
+        updateDitDuration();
+
         if (window.location.search.includes('?')) {
             const urlParams = new URLSearchParams(window.location.search);
             track = urlParams.get('track');
