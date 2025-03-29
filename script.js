@@ -99,8 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to start the tile generation
     function startTileGeneration() {
         const trackElt = document.getElementById('track');
+	
+	// Default speed from URL if any
         let speedFromUrl = new URLSearchParams(window.location.search).get('speed');
-
         if (speedFromUrl) {
             speed = parseInt(speedFromUrl, 10);
         }
@@ -108,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Speed set to ${speed} wpm`);
         updateDitDuration();
 
+	// Symbols to play if any
         if (window.location.search.includes('?')) {
             const urlParams = new URLSearchParams(window.location.search);
             track = urlParams.get('track');
