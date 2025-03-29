@@ -24,19 +24,21 @@ body {
 .tile {
     position: relative;
     left: 0;
-    min-height: 50px;
-    min-width: 50px;
-    transition: height 1s ease-in-out; /* Adjust duration as needed */
+    height: 0;
 }
 
 .dot {
     background-color: red;
     border-radius: 50%;
+    height: 50px;
+    transition: height 1s linear; /* Adjust duration as needed */
 }
 
 .dash {
     background-color: lightblue;
-    border-radius: 50%;
+    border-radius: 20px;
+    height: 150px;
+    transition: height 3s linear; /* Adjust duration as needed */
 }
 
 #keyboard {
