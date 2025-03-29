@@ -65,8 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateTile(track) {
         const tileTypes = ['dot', 'dash'];
         const tileType = tileTypes[Math.floor(Math.random() * tileTypes.length)];
-        const tileDuration = tileType === 'dot' ? 1 : 3;
-        const spaceDuration = Math.floor(Math.random() * 3) + 1;
+        const tileDuration = 1; // All tiles take the same duration
 
         const tileElement = document.createElement('div');
         tileElement.classList.add(`tile`, tileType);
@@ -74,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             track.removeChild(tileElement);
-        }, (tileDuration + spaceDuration) * 1000);
+        }, tileDuration * 1000);
     }
 
     // Function to start the tile generation
