@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gainNode.gain.setValueAtTime(0, audioContext.currentTime);
             oscillator.connect(gainNode);
         }
+        oscillator.start(); // Start the oscillator at the end of initAudio
     }
 
     // Create the keyboard

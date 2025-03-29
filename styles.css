@@ -29,6 +29,14 @@ body {
     animation-fill-mode: forwards;
 }
 
+.dot {
+    background-color: lightred;
+}
+
+.dash {
+    background-color: lightblue;
+}
+
 @keyframes moveDown {
     from {
         transform: translateY(-100%);
