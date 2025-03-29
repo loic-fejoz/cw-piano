@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const dit_duration_in_ms = 80;
+    const dit_duration_in_ms = 50 / 60 * speed;
     const keyboardContainer = document.getElementById('keyboard');
     const speedInput = document.getElementById('speed-input');
     const scoreDisplay = document.getElementById('score');
