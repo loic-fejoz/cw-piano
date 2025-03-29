@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to generate a random tile based on the track parameter
     function generateTile(trackElt) {
-        const dit_duration_in_ms = 50 / 60 * speed;
+        const dit_duration_in_ms = 50 / (60 * speed);
         const tileTypes = { '.': 'dot', '-': 'dash', '_': 'space' };
 
 	const current = track[index];
@@ -113,9 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Calculate the duration in milliseconds based on the speed
-        const durationInMs = (60 / speed) * dit_duration_in_ms;
-
         generateTile(trackElt);
     }
 
@@ -127,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateDitDuration() {
-        const dit_duration_in_ms = 50 / 60 * speed;
+        const dit_duration_in_ms = 50 / (60 * speed);
         document.querySelectorAll('.dot').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
         document.querySelectorAll('.dash').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms * 3}ms`);
         document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
