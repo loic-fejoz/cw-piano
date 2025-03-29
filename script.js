@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let index = 0;
     let track = ['.'];
     let speed = 15; // Default speed in wpm
+    let timeoutID = null;
 
     // Declare convertButton
     const convertButton = document.getElementById('convert-button');
@@ -84,11 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
         tileElement.classList.add(`tile`);
         trackElt.prepend(tileElement);
 
-        setTimeout(() => {
+        timeoutID = setTimeout(() => {
             tileElement.classList.add(tileType, tileType + '-' + speed.toString() + 'wpm');
         }, 10); // Small delay to ensure the element is in the DOM
 
-        setTimeout(() => {
+        timeoutID = setTimeout(() => {
             generateTile(trackElt);
         }, tileDuration * dit_duration_in_ms); // Generate a new tile once the last one has fully grown. 
 
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-',
         'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
         '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
-        '6': '-....', '7': '--...', '8': '---..', '9': '----.', ' ': ''
+        '6': '-....', '7': '--...', '8': '---..', '9': '----.', ' ': '', '-': '-....-'
     };
 
     function convertMessageToCW(msg) {
@@ -152,14 +153,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to start the tile generation
     function startTileGeneration() {
+        if (timeoutID) {
+            window.clearTimeout(timeoutID);
+        }        
         index = 0;
         const validChars = ['.', '-', '_'];
         track = track.split('');
         if (!track.every(char => validChars.includes(char))) {
-            console.error('Invalid track parameter. Must be a string of exactly 3 characters, each being one of ".", "-", or "_"');
+            console.error('Invalid track parameter. Must be a string made of ".", "-", or "_"');
             return;
         }
-        // Remove all timeout handlers before starting a new sequence of tiles. AI!
         const trackElt = document.getElementById('track');
         generateTile(trackElt);
     }
@@ -184,6 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (message) {
             track = convertMessageToCW(message);
             console.log('New track: ' + track);
+
+            // Update the URL with the new track parameter and current speed as a query parameter
+            window.history.pushState(null, '', `?track=${encodeURIComponent(track)}&speed=${speed}`);
             startTileGeneration();
         } else {
             alert('Please enter a message to convert.');
