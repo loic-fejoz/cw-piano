@@ -3,11 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreDisplay = document.getElementById('score');
     let score = 0;
 
-    // Define the Morse Code keys and their corresponding sounds
+    // Define the Morse Code keys and their corresponding frequencies
     const morseKeys = [
-        { key: 'A', sound: 'sounds/a.mp3' },
-        { key: 'B', sound: 'sounds/b.mp3' },
-        { key: 'C', sound: 'sounds/c.mp3' },
+        { key: 'A', frequency: 800 },
         // Add more keys as needed
     ];
 
@@ -16,14 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const keyElement = document.createElement('div');
         keyElement.classList.add('key');
         keyElement.textContent = key.key;
-        keyElement.addEventListener('click', () => playSound(key.sound));
+        keyElement.addEventListener('click', () => playTone(key.frequency));
         keyboardContainer.appendChild(keyElement);
     });
 
-    // Function to play a sound
-    function playSound(soundUrl) {
-        const audio = new Audio(soundUrl);
-        audio.play();
+    // Function to play a tone
+    function playTone(frequency) {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        oscillator.type = 'sine';
+        oscillator.frequency.value = frequency;
+        oscillator.connect(audioContext.destination);
+        oscillator.start();
+        setTimeout(() => oscillator.stop(), 100); // Stop the tone after 100ms
     }
 
     // Update the score display
