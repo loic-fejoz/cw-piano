@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gainNode.gain.setValueAtTime(0, audioContext.currentTime);
             oscillator.connect(gainNode);
         }
+	oscillator.start();
     }
 
     // Create the keyboard
@@ -83,9 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setInterval(() => generateTile(track), 1000); // Generate a tile every second
     }
-
-    // Initialize audio context, oscillator, and gain node when the game starts
-    initAudio();
 
     // Start generating tiles
     startTileGeneration();
