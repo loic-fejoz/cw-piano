@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDitDuration();
 
     // Symbols to play if any
-    // Handle message query parameter conversion to track if any. Convert to track if present. AI!
+    // Handle message query parameter conversion to track if any. Convert to track if present.
     if (window.location.search.includes('?')) {
         const urlParams = new URLSearchParams(window.location.search);
         track = urlParams.get('track');
