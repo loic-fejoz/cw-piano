@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to generate a random tile based on the track parameter
     function generateTile(trackElt) {
-        const dit_duration_in_ms = 50 / (60 * speed);
+        const dit_duration_in_ms = 50000 / (60 * speed);
         const tileTypes = { '.': 'dot', '-': 'dash', '_': 'space' };
 
 	const current = track[index];
@@ -96,18 +96,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Default speed from URL if any
+    let speedFromUrl = new URLSearchParams(window.location.search).get('speed');
+    if (speedFromUrl) {
+        speed = parseInt(speedFromUrl, 10);
+    }
+
+    console.log(`Speed set to ${speed} wpm`);
+    speedInput.value = speed; // Update the input element with the new speed value
+    updateDitDuration();
+
+
     // Function to start the tile generation
     function startTileGeneration() {
         const trackElt = document.getElementById('track');
-	
-	// Default speed from URL if any
-        let speedFromUrl = new URLSearchParams(window.location.search).get('speed');
-        if (speedFromUrl) {
-            speed = parseInt(speedFromUrl, 10);
-        }
-
-        console.log(`Speed set to ${speed} wpm`);
-        updateDitDuration();
 
 	// Symbols to play if any
         if (window.location.search.includes('?')) {
@@ -132,11 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
         speed = parseInt(speedInput.value, 10);
         console.log(`Speed set to ${speed} wpm`);
         updateDitDuration();
-        speedInput.value = speed; // Update the input element with the new speed value
     });
 
     function updateDitDuration() {
-        const dit_duration_in_ms = 50 / (60 * speed);
+        const dit_duration_in_ms = 50000 / (60 * speed);
         document.querySelectorAll('.dot').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
         document.querySelectorAll('.dash').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms * 3}ms`);
         document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
