@@ -106,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     speedInput.value = speed; // Update the input element with the new speed value
     updateDitDuration();
 
-
     // Function to start the tile generation
     function startTileGeneration() {
         const trackElt = document.getElementById('track');
@@ -142,6 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.dash').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms * 3}ms`);
         document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
     }
+
+    // Handle form submission
+    convertButton.addEventListener('click', () => {
+        const message = messageInput.value;
+        if (message) {
+            track = message.split('').map(char => char === ' ' ? '_' : char).join('');
+            startTileGeneration();
+        } else {
+            alert('Please enter a message to convert.');
+        }
+    });
 
     // Start generating tiles on button click
     document.getElementById('start-button').addEventListener('click', startTileGeneration);
