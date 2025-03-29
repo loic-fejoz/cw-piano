@@ -31,14 +31,21 @@ body {
     background-color: red;
     border-radius: 50%;
     height: 50px;
-    transition: height 1s linear; /* Adjust duration as needed */
+    transition: height 1s linear;
 }
 
 .dash {
     background-color: lightblue;
     border-radius: 20px;
     height: 150px;
-    transition: height 3s linear; /* Adjust duration as needed */
+    transition: height 3s linear;
+}
+
+.space {
+    background-color: lightgrey;
+    border-radius: 20px;
+    height: 50px;
+    transition: height 1s linear;
 }
 
 #keyboard {

@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateTile(track) {
         const tileTypes = ['dot', 'dash', 'space']; // Add 'space' to the array
         const tileType = tileTypes[Math.floor(Math.random() * tileTypes.length)];
-        const tileDuration = tileType === 'dot' ? 1 : (tileType === 'dash' ? 3 : 0.5); // Adjust duration as needed
+        const tileDuration = (tileType === 'dot' | tileType === 'space') ? 1 : 3; 
 
         const tileElement = document.createElement('div');
         tileElement.classList.add(`tile`);
