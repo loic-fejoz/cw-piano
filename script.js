@@ -113,6 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Calculate the duration in milliseconds based on the speed
+        const durationInMs = (60 / speed) * dit_duration_in_ms;
+
         generateTile(trackElt);
     }
 
@@ -120,7 +123,15 @@ document.addEventListener('DOMContentLoaded', () => {
     speedInput.addEventListener('input', () => {
         speed = parseInt(speedInput.value, 10);
         console.log(`Speed set to ${speed} wpm`);
+        updateDitDuration();
     });
+
+    function updateDitDuration() {
+        const dit_duration_in_ms = 50 / 60 * speed;
+        document.querySelectorAll('.dot').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
+        document.querySelectorAll('.dash').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms * 3}ms`);
+        document.querySelectorAll('.space').forEach(tile => tile.style.transitionDuration = `${dit_duration_in_ms}ms`);
+    }
 
     // Start generating tiles on button click
     document.getElementById('start-button').addEventListener('click', startTileGeneration);
