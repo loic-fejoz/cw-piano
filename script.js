@@ -122,6 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Speed set to ${speed} wpm`);
     });
 
-    // Start generating tiles
-    //startTileGeneration();
+    // Start generating tiles on button click
+    document.getElementById('start-button').addEventListener('click', startTileGeneration);
 });
