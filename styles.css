@@ -22,13 +22,11 @@ body {
 }
 
 .tile {
-    position: absolute;
+    position: relative;
     left: 0;
-    animation-name: moveDown;
-    animation-duration: 10s; /* Adjust duration as needed */
-    animation-fill-mode: forwards;
     min-height: 50px;
     min-width: 50px;
+    transition: height 1s ease-in-out; /* Adjust duration as needed */
 }
 
 .dot {
@@ -37,15 +35,6 @@ body {
 
 .dash {
     background-color: lightblue;
-}
-
-@keyframes moveDown {
-    from {
-        transform: translateY(-100%);
-    }
-    to {
-        transform: translateY(100%);
-    }
 }
 
 #keyboard {
