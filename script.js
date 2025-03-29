@@ -102,7 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Invalid track parameter. Must be a string of exactly 3 characters, each being one of ".", "-", or "_"');
             return;
         }
-	generateTile(trackElt);
+
+        // Ensure the trackElt only contains the latest 10 tiles
+        while (trackElt.children.length > 10) {
+            trackElt.removeChild(trackElt.lastChild);
+        }
+        generateTile(trackElt);
     }
 
     // Start generating tiles
