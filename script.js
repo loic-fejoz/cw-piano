@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const dit_duration_in_ms = 80;
     const keyboardContainer = document.getElementById('keyboard');
+    const speedInput = document.getElementById('speed-input');
     const scoreDisplay = document.getElementById('score');
     let score = 0;
     let audioContext;
@@ -8,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let gainNode;
     let index = 0;
     let track = ['.'];
+    let speed = 15; // Default speed in wpm
 
     // Define the Morse Code keys and their corresponding frequencies
     const morseKeys = [
@@ -111,8 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Calculate the duration in milliseconds based on the speed
+        const durationInMs = (60 / speed) * dit_duration_in_ms;
+
         generateTile(trackElt);
     }
+
+    // Update the speed when the input changes
+    speedInput.addEventListener('input', () => {
+        speed = parseInt(speedInput.value, 10);
+        console.log(`Speed set to ${speed} wpm`);
+    });
 
     // Start generating tiles
     startTileGeneration();
