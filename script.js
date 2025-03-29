@@ -11,6 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add more keys as needed
     ];
 
+    // Initialize the audio context and oscillator
+    function initAudio() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (!oscillator) {
+            oscillator = audioContext.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.connect(audioContext.destination);
+        }
+    }
+
     // Create the keyboard
     morseKeys.forEach(key => {
         const keyElement = document.createElement('div');
@@ -23,26 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to play a tone
     function playTone(frequency) {
-        if (!audioContext) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        if (!audioContext || !oscillator) {
+            initAudio();
         }
-        if (!oscillator) {
-            oscillator = audioContext.createOscillator();
-            oscillator.type = 'sine';
-            oscillator.connect(audioContext.destination);
-        }
-        if (!oscillator.playing) {
-	    oscillator.playing = true;
-            oscillator.frequency.value = frequency;
-            oscillator.start();
-        }
+        oscillator.frequency.value = frequency;
+        oscillator.start();
     }
 
     // Function to stop the tone
     function stopTone() {
-        if (oscillator && oscillator.playing) {
+        if (oscillator) {
             oscillator.stop();
-            oscillator.playing = false;
         }
     }
 
@@ -50,4 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateScore() {
         scoreDisplay.textContent = `Score: ${score}`;
     }
+
+    // Initialize audio context and oscillator when the game starts
+    initAudio();
 });
