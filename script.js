@@ -65,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateTile(track) {
         const tileTypes = ['dot', 'dash'];
         const tileType = tileTypes[Math.floor(Math.random() * tileTypes.length)];
-        const tileDuration = 3; // All tiles take the same duration
+        const tileDuration = 10; // All tiles take the same duration
 
         const tileElement = document.createElement('div');
         tileElement.classList.add(`tile`, tileType);
-        track.appendChild(tileElement);
+        track.prepend(tileElement);
 
         setTimeout(() => {
             track.removeChild(tileElement);
