@@ -68,7 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to generate a random tile based on the track parameter
     function generateTile(trackElt) {
-	const tileTypes = { '.': 'dot', '-': 'dash', '_': 'space' };
+        const dit_duration_in_ms = 50 / 60 * speed;
+        const tileTypes = { '.': 'dot', '-': 'dash', '_': 'space' };
 
 	const current = track[index];
         index = (index + 1) % track.length;
