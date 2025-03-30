@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#game-container {
+    text-align: center;
+}
+
+#track {
+    width: 50px;
+    height: 400px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+
+    justify-content: center;
+}
+
+.tile {
+    position: relative;
+    left: 0;
+    height: 0;
+    width: 100%;
+}
+
+.dot {
+    background-color: red;
+    border-radius: 50%;
+    height: 50px;
+}
+
+.dash {
+    background-color: lightblue;
+    border-radius: 20px;
+    height: 150px;
+}
+
+.space {
+    background-color: lightgrey;
+    border-radius: 20px;
+    height: 50px;
+}
+
+.dot-20wpm {
+    transition: height 0.041s linear;
+}
+
+.dash-20wpm {
+    transition: height 0.125s linear;
+}
+
+.space-20wpm {
+    transition: height 0.041s linear;
+}
+
+.dot-15wpm {
+    transition: height 0.055s linear;
+}
+
+.dash-15wpm {
+    transition: height 0.166s linear;
+}
+
+.space-15wpm {
+    transition: height 0.055s linear;
+}
+
+.dot-10wpm {
+    transition: height 0.083s linear;
+}
+
+.dash-10wpm {
+    transition: height 0.25s linear;
+}
+
+.space-10wpm {
+    transition: height 0.083s linear;
+}
+
+#keyboard {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.key {
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#score {
+    margin-top: 20px;
+}

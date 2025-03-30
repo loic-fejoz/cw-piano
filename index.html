@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Piano Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Morse Code Piano Game</h1>
+        <div id="track"></div>
+        <div id="keyboard"></div>
+        <div id="score">Score: 0</div>
+    </div>
+    <div id="settings">
+        <p>
+            <input type="number" id="speed-input" placeholder="Set speed (wpm)">
+            <button id="start-button">Start</button>
+        </p>
+        <p>
+            <input type="text" id="message-input" placeholder="Enter a message to convert to Morse Code">
+            <button id="convert-button">Convert to Track</button>
+        </p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
