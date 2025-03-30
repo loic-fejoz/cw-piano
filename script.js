@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         keyElement.textContent = key.key;
         keyElement.addEventListener('mousedown', () => playTone(key.frequency));
         keyElement.addEventListener('mouseup', () => stopTone());
+        keyElement.addEventListener('touchstart', () => playTone(key.frequency)); // Add touch start event
+        keyElement.addEventListener('touchend', () => stopTone()); // Add touch end event
         keyboardContainer.appendChild(keyElement);
     });
 
