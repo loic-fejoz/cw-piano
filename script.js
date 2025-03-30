@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
     morseKeys.forEach(key => {
         const keyElement = document.createElement('div');
         keyElement.classList.add('key');
-        keyElement.textContent = key.key;
         keyElement.addEventListener('mousedown', () => playTone(key.frequency));
         keyElement.addEventListener('mouseup', () => stopTone());
         keyElement.addEventListener('touchstart', () => playTone(key.frequency)); // Add touch start event
